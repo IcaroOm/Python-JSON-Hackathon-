@@ -1,0 +1,34 @@
+<!-- iss_app/templates/iss_app/iss_map.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ISS Tracker</title>
+</head>
+<body>
+    <div id="map-container">
+        {{ map|safe }}
+    </div>
+    <button id="update-map-btn">Update Map</button>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#update-map-btn").click(function () {
+                $.ajax({
+                    url: '/update-map/',
+                    type: 'GET',
+                    success: function (data) {
+                        console.log(data);
+                        $('#map-container').load('/map/ #map-container');
+                        alert('Map updated successfully!');
+                    },
+                    error: function (error) {
+                        console.error(error);
+                        alert('Failed to update map!');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
